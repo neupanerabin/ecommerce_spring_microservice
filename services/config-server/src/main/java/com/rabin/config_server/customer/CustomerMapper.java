@@ -4,9 +4,10 @@ package com.rabin.config_server.customer;
  * @author : rabin
  */
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service // Marks this class as a Spring service
+@Component // Marks this class as a Spring service
 public class CustomerMapper {
 
     // Maps a CustomerRequest object to a Customer entity
@@ -25,6 +26,9 @@ public class CustomerMapper {
 
     // Maps a Customer entity to a CustomerResponse object
     public CustomerResponse fromCustomer(Customer customer) {
+        if(customer == null){
+            return null;
+        }
         return new CustomerResponse(
                 customer.getId(), // Gets the ID
                 customer.getFirstname(), // Gets the first name
