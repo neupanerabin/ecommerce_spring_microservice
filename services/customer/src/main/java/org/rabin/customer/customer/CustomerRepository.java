@@ -1,4 +1,4 @@
-package com.rabin.config_server.customer;
+package org.rabin.customer.customer;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -8,4 +8,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 // Repository interface for Customer entities, extending MongoRepository
 public interface CustomerRepository extends MongoRepository<Customer, String> {
+
 }

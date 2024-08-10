@@ -1,11 +1,10 @@
-package com.rabin.config_server.customer;
+package org.rabin.customer.customer;
 
 /*
  * @author : rabin
  */
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component // Marks this class as a Spring service
 public class CustomerMapper {

@@ -1,12 +1,12 @@
-package com.rabin.config_server.customer;
+package org.rabin.customer.customer;
 
 /*
  * @author : rabin
  */
 
-import com.rabin.config_server.exception.CustomerNotFoundException;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
+import org.rabin.customer.exception.CustomerNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,13 +23,13 @@ public class CustomerService {
 
     // Method to create a new customer
     public String createCustomer(CustomerRequest request) {
-        var customer = repository.save(mapper.toCustomer(request)); // Maps request to Customer and saves it
+        var customer = this.repository.save(mapper.toCustomer(request)); // Maps request to Customer and saves it
         return customer.getId(); // Returns the ID of the newly created customer
     }
 
     // Method to update an existing customer
     public void updateCustomer(CustomerRequest request) {
-        var customer = repository.findById(request.id())
+        var customer = this.repository.findById(request.id())
                 .orElseThrow(() -> new CustomerNotFoundException(
                         format("Cannot update customer:: No customer found with the provided ID:: %s", request.id())
                 ));
@@ -57,18 +57,20 @@ public class CustomerService {
     public List<CustomerResponse> findAllCustomers() {
         return repository.findAll()
                 .stream()
-                .map(mapper::fromCustomer) // Converts each Customer to CustomerResponse
+                .map(this.mapper::fromCustomer) // Converts each Customer to CustomerResponse
                 .collect(Collectors.toList());
     }
 
+
+/////
     // Method to check if a customer exists by ID
     public Boolean existsById(String customerId) {
-        return repository.findById(customerId).isPresent();
+        return this.repository.findById(customerId).isPresent();
     }
 
     // Method to find a customer by ID
     public CustomerResponse findById(String customerId) {
-        return repository.findById(customerId)
+        return this.repository.findById(customerId)
                 .map(mapper::fromCustomer) // Converts Customer to CustomerResponse if found
                 .orElseThrow(() -> new CustomerNotFoundException(
                         format("No customer found with the provided ID: %s", customerId)
@@ -77,6 +79,6 @@ public class CustomerService {
 
     // Method to delete a customer by ID
     public void deleteCustomer(String customerId) {
-        repository.deleteById(customerId); // Deletes the customer by ID
+        this.repository.deleteById(customerId); // Deletes the customer by ID
     }
 }

@@ -1,10 +1,10 @@
-package com.rabin.config_server.handler;
+package org.rabin.customer.handler;
 
 /*
  * @author : rabin
  */
 
-import com.rabin.config_server.exception.CustomerNotFoundException;
+import org.rabin.customer.exception.CustomerNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

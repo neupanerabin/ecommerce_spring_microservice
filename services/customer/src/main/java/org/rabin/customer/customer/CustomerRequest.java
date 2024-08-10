@@ -1,4 +1,4 @@
-package com.rabin.config_server.customer;
+package org.rabin.customer.customer;
 
 /*
  * @author : rabin
@@ -9,7 +9,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record CustomerRequest (
         String id,
-
         // Validates that the firstname field is not null
         @NotNull(message = "Customer firstname is required")
         String firstname,
@@ -22,7 +21,6 @@ public record CustomerRequest (
         @NotNull(message = "Customer email is required")
         @Email(message = "Customer email is not a valid email address")
         String email,
-
         // Address is optional, but can include validation within the Address class if needed
         Address address
 ){

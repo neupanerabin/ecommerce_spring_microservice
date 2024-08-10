@@ -1,4 +1,4 @@
-package com.rabin.config_server.customer;
+package org.rabin.customer.customer;
 
 /*
  * @author : rabin

@@ -1,4 +1,4 @@
-package com.rabin.config_server.exception;
+package org.rabin.customer.exception;
 
 
 /*

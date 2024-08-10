@@ -1,4 +1,4 @@
-package com.rabin.config_server.customer;
+package org.rabin.customer.customer;
 
 /*
  * @author : rabin
@@ -23,7 +23,7 @@ public class CustomerController {
     public ResponseEntity<String> createCustomer(
             @RequestBody @Valid CustomerRequest request
     ) {
-        return ResponseEntity.ok(service.createCustomer(request)); // Returns the ID of the created customer
+        return ResponseEntity.ok(this.service.createCustomer(request)); // Returns the ID of the created customer
     }
 
     // Endpoint to update an existing customer
@@ -38,19 +38,20 @@ public class CustomerController {
     // Endpoint to retrieve all customers
     @GetMapping
     public ResponseEntity<List<CustomerResponse>> findAll(){
-        return ResponseEntity.ok(service.findAllCustomers()); // Returns the list of all customers
+        return ResponseEntity.ok(this.service.findAllCustomers()); // Returns the list of all customers
     }
+
 
     // Endpoint to check if a customer exists by ID
     @GetMapping("/exists/{customer-id}")
     public ResponseEntity<Boolean> existsById(@PathVariable("customer-id") String customerId){
-        return ResponseEntity.ok(service.existsById(customerId)); // Returns true if the customer exists, false otherwise
+        return ResponseEntity.ok(this.service.existsById(customerId)); // Returns true if the customer exists, false otherwise
     }
 
     // Endpoint to retrieve a customer by ID
     @GetMapping("/{customer-id}")
     public ResponseEntity<CustomerResponse> findById(@PathVariable("customer-id") String customerId){
-        return ResponseEntity.ok(service.findById(customerId)); // Returns the customer details for the given ID
+        return ResponseEntity.ok(this.service.findById(customerId)); // Returns the customer details for the given ID
     }
 
     // Endpoint to delete a customer by ID
