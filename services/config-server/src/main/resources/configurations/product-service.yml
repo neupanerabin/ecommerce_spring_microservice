@@ -1,3 +1,4 @@
+
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -7,14 +8,18 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+      database: postgresql
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      defer-datasource-initialization: true
+  main:
+    allow-circular-references: true
 
   flyway:
     baseline-on-migrate: true
     enabled: true
     baseline-description: "init"
     baseline-version: 0
+    depends-on: entityManagerFactory
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
 server:

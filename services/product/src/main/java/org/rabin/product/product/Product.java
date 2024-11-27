@@ -1,4 +1,4 @@
-package org.rabin.ecommerce.product;
+package org.rabin.product.product;
 
 
 /*
@@ -7,18 +7,16 @@ package org.rabin.ecommerce.product;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.rabin.ecommerce.category.Category;
+import org.rabin.product.category.Category;
 
 import java.math.BigDecimal;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Getter
 @Setter
 @Entity
 public class Product {
-
     @Id
     @GeneratedValue
     private Integer id;
@@ -26,9 +24,8 @@ public class Product {
     private String description;
     private double availableQuantity;
     private BigDecimal price;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-
-
 }
