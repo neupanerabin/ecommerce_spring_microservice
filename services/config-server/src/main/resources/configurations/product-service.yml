@@ -19,7 +19,8 @@ spring:
     enabled: true
     baseline-description: "init"
     baseline-version: 0
-    depends-on: entityManagerFactory
+    depends-on: entityManagerFactory # flyway add
+
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
 server:

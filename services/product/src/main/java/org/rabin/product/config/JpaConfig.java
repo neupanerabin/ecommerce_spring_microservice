@@ -7,10 +7,11 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import jakarta.persistence.EntityManagerFactory; // Use jakarta for Spring Boot 3.x
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 
 import javax.sql.DataSource;
 
+// aff these files for flyway configurations
 @Configuration
 public class JpaConfig {
 
