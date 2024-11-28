@@ -7,7 +7,7 @@ package org.rabin.product.category;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.rabin.product.product.Product;
+import org.rabin.product.products.Product;
 
 import java.util.List;
 
@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Setter
+@Getter
 @Entity
 public class Category {
     @Id
@@ -24,4 +25,6 @@ public class Category {
     private String description;
      @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     private List<Product> products;
+
+
 }

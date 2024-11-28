@@ -1,4 +1,4 @@
-package org.rabin.product.product;
+package org.rabin.product.products;
 
 
 /*
@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 @Setter
+@Getter
 @Entity
 public class Product {
     @Id
@@ -28,4 +29,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+
+
 }
