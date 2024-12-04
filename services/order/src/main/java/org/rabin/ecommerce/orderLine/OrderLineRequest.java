@@ -6,7 +6,8 @@ package org.rabin.ecommerce.orderLine;
  */
 
 
-public record OrderLineRequest (Integer id,
+public record OrderLineRequest (
+        Integer id,
                                 Integer orderId,
                                 Integer productId,
 

@@ -8,47 +8,73 @@ package org.rabin.ecommerce.order;
 import lombok.RequiredArgsConstructor;
 import org.rabin.ecommerce.customer.CustomerClient;
 import org.rabin.ecommerce.exception.BusinessException;
+import org.rabin.ecommerce.kafka.OrderConfirmation;
+import org.rabin.ecommerce.kafka.OrderProducer;
 import org.rabin.ecommerce.orderLine.OrderLineRequest;
 import org.rabin.ecommerce.orderLine.OrderLineService;
 import org.rabin.ecommerce.product.ProductClient;
 import org.rabin.ecommerce.product.PurchaseRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+
 @Service
 @RequiredArgsConstructor
 public class OrderService {
-    private  final CustomerClient customerClient;
+    private final CustomerClient customerClient;
     private final ProductClient productClient;
     private final OrderRepository repository;
     private final OrderMapper mapper;
     private final OrderLineService orderLineService;
+    private final OrderProducer orderProducer;
+
     public Integer createdOrder(OrderRequest request) {
         // check the customer  --> OpenFeign
         var customer = this.customerClient.findCustomerById(request.customerId())
                 .orElseThrow(() -> new BusinessException("Cannot create order:: No customer exists with the provided Id"));
 
         // purchase the product --> product - ms using(RestTemplate)
-        this.productClient.purchaseProducts(request.products());
+        var purchaseProducts = this.productClient.purchaseProducts(request.products());
 
         //persist order
         var order = this.repository.save(mapper.toOrder(request));
 
         // persist order lines
-        for(PurchaseRequest purchaseRequest: request.products()){
+        for (PurchaseRequest purchaseRequest : request.products()) {
             orderLineService.saveOrderLine(
                     new OrderLineRequest(
-                    null,
-                    order.getId(),
-                    purchaseRequest.productId(),
-                    purchaseRequest.quantity()
-            )
+                            null,
+                            order.getId(),
+                            purchaseRequest.productId(),
+                            purchaseRequest.quantity()
+                    )
             );
-
         }
 
         // start payment process
 
+
         // send the order confirmation --> notification-ms (kafka)
-        return null;
+        orderProducer.sendOrderConfirmation(
+                new OrderConfirmation(
+                        request.reference(),
+                        request.amount(),
+                        request.paymentMethod(),
+                        customer,
+                        purchaseProducts
+
+                )
+        );
+
+        return order.getId();
+    }
+
+    public List<OrderResponse> findAll() {
+        return repository.findAll()
+                .stream()
+                .map(mapper::fromOrder)
+                .collect(Collectors.toList());
     }
 }
