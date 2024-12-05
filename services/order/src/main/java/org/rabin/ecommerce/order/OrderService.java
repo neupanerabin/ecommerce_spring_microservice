@@ -5,6 +5,7 @@ package org.rabin.ecommerce.order;
  * @author : rabin
  */
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.rabin.ecommerce.customer.CustomerClient;
 import org.rabin.ecommerce.exception.BusinessException;
@@ -76,5 +77,12 @@ public class OrderService {
                 .stream()
                 .map(mapper::fromOrder)
                 .collect(Collectors.toList());
+    }
+
+    public OrderResponse findById(Integer orderId) {
+        return repository.findById(orderId)
+                .map(mapper::fromOrder)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("No order found with the provided ID: %d", orderId)));
+
     }
 }
