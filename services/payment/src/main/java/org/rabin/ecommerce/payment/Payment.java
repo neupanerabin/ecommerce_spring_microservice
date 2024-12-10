@@ -31,6 +31,7 @@ public class Payment {
     private BigDecimal amount;
     @Enumerated(STRING)
     private PaymentMethod paymentMethod;
+    private Integer orderId;
     @CreatedDate
     @Column(updatable = false, nullable = false)
     private LocalDateTime createdDate;
