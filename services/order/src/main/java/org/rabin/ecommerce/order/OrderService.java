@@ -13,6 +13,8 @@ import org.rabin.ecommerce.kafka.OrderConfirmation;
 import org.rabin.ecommerce.kafka.OrderProducer;
 import org.rabin.ecommerce.orderLine.OrderLineRequest;
 import org.rabin.ecommerce.orderLine.OrderLineService;
+import org.rabin.ecommerce.payment.PaymentClient;
+import org.rabin.ecommerce.payment.PaymentRequest;
 import org.rabin.ecommerce.product.ProductClient;
 import org.rabin.ecommerce.product.PurchaseRequest;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,7 @@ public class OrderService {
     private final OrderMapper mapper;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
     public Integer createdOrder(OrderRequest request) {
         // check the customer  --> OpenFeign
@@ -55,6 +58,14 @@ public class OrderService {
         }
 
         // start payment process
+        var paymentRequest = new PaymentRequest(
+                request.amount(),
+                request.paymentMethod(),
+                order.getId(),
+                order.getReference(),
+                customer
+        );
+        paymentClient.requestOrderPayment(paymentRequest);
 
 
         // send the order confirmation --> notification-ms (kafka)
