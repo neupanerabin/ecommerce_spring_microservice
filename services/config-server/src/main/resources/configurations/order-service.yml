@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/order
+    url: jdbc:postgresql://localhost:5433/order
     username: rabin
     password: rabin
   jpa:
@@ -15,7 +15,7 @@ spring:
       key-serializer: org.apache.kafka.common.serializable.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        spring.json.type.mapping: orderConfirmation:org.rabin.ecommerce.notification.PaymentNotificationRequest
+        spring.json.type.mapping: orderConfirmation:org.rabin.ecommerce.kafka.OrderConfirmation
 
 server:
   port: 8070
