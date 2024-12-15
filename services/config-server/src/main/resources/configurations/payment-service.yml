@@ -15,8 +15,11 @@ spring:
       key-serializer: org.apache.kafka.common.serializable.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        spring.json.type.mapping: payment Confirmation:org.rabin.ecommerce.kafka.OrderConfirmation
+        spring.json.type.mapping: paymentConfirmation:org.rabin.ecommerce.notification.PaymentNotificationRequest
 
+  application:
+    config:
+      product-url: http://localhost:8222/api/v1/products
 server:
   port: 8060
 

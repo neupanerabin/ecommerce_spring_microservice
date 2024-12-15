@@ -16,7 +16,8 @@ spring:
       value-dserializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
         spring.json.trusted.packages: '*'
-        spring.json.type.mapping: payment Confirmation:org.rabin.ecommerce.kafka.order.OrderConfirmation,payment Confirmation:org.rabin.ecommerce.kafka.payment.OrderConfirmation
+        spring.json.type.mapping: orderConfirmation:org.rabin.ecommerce.kafka.order.OrderConfirmation,paymentConfirmation:org.rabin.ecommerce.kafka.payment.PaymentConfirmation
+
 
   mail:
     host: localhost
