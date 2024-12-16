@@ -13,6 +13,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
+
 import java.util.HashMap;
 
 @RestControllerAdvice // Indicates that this class provides global exception handling for controllers
@@ -48,7 +51,7 @@ public class GlobalExceptionHandler {
                 });
 
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST) // Respond with a 400 Bad Request status
+                .status(BAD_REQUEST) // Respond with a 400 Bad Request status
                 .body(new ErrorResponse(errors)); // Return the validation errors in the response body
     }
 

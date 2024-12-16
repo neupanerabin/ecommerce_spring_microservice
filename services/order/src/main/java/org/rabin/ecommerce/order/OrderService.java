@@ -6,6 +6,7 @@ package org.rabin.ecommerce.order;
  */
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.rabin.ecommerce.customer.CustomerClient;
 import org.rabin.ecommerce.exception.BusinessException;
@@ -34,13 +35,14 @@ public class OrderService {
     private final OrderProducer orderProducer;
     private final PaymentClient paymentClient;
 
+    @Transactional
     public Integer createdOrder(OrderRequest request) {
         // check the customer  --> OpenFeign
         var customer = this.customerClient.findCustomerById(request.customerId())
                 .orElseThrow(() -> new BusinessException("Cannot create order:: No customer exists with the provided Id"));
 
         // purchase the product --> product - ms using(RestTemplate)
-        var purchaseProducts = this.productClient.purchaseProducts(request.products());
+        var purchaseProducts = productClient.purchaseProducts(request.products());
 
         //persist order
         var order = this.repository.save(mapper.toOrder(request));
