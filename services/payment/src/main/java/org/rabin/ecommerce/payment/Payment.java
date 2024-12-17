@@ -35,7 +35,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "payment")
 public class Payment{
 
-    @Getter
     @Id
     @GeneratedValue
     private Integer id;
