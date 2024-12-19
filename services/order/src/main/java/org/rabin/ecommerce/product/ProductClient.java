@@ -1,13 +1,7 @@
 package org.rabin.ecommerce.product;
 
-
-/*
- * @author : rabin
- */
-
-
-import org.rabin.ecommerce.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
+import org.rabin.ecommerce.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -26,15 +20,14 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
 public class ProductClient {
 
-//    @Value("${application.config.product-url}"
-
-//    @Value("$http://localhost:8222/api/v1/products")
-    @Value("${application.config.product-url:default-url}")
-
+    @Value("${spring.application.config.product-url}") // Adjusted key for YAML structure
     private String productUrl;
+
     private final RestTemplate restTemplate;
 
     public List<PurchaseResponse> purchaseProducts(List<PurchaseRequest> requestBody) {
+        System.out.println("Resolved productUrl: " + productUrl); // Debugging output
+
         HttpHeaders headers = new HttpHeaders();
         headers.set(CONTENT_TYPE, APPLICATION_JSON_VALUE);
 
@@ -48,12 +41,10 @@ public class ProductClient {
                 requestEntity,
                 responseType
         );
-        if(responseEntity.getStatusCode().isError()){
-            throw new BusinessException("An error occurred while processing the products purchase" + responseEntity.getStatusCode());
 
+        if (responseEntity.getStatusCode().isError()) {
+            throw new BusinessException("An error occurred while processing the products purchase: " + responseEntity.getStatusCode());
         }
         return responseEntity.getBody();
-
     }
-
 }
