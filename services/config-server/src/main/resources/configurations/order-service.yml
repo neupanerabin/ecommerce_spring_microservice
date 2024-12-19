@@ -13,15 +13,16 @@ spring:
   kafka:
     producer:
       bootstrap-servers: localhost:9092
-      key-serializer: org.apache.kafka.common.serializable.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
         spring.json.type.mapping: orderConfirmation:org.rabin.ecommerce.kafka.OrderConfirmation
+
+
   application:
     config:
-      customer-url:http://localhost:8090/api/v1/customers
-      product-url:http://localhost:8050/api/v1/products
-      payment-url:http://localhost:8060/api/v1/payments
+      customer-url: http://localhost:8222/api/v1/customers
+      product-url: http://localhost:8222/api/v1/products
+      payment-url: http://localhost:8222/api/v1/payments
 server:
   port: 8070
-
