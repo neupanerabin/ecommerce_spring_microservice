@@ -13,10 +13,7 @@ import java.util.Optional;
 
 @FeignClient(
         name = "customer-service",
-//        url = "${application.config.customer-url}"
-        url = "http://localhost:8090/api/v1/customers"
-
-
+        url = "${spring.application.config.customer-url}"
 
 )
 public interface CustomerClient {

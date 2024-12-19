@@ -8,9 +8,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    defer-datasource-initialization: true
+      database: postgresql
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      defer-datasource-initialization: true
   main:
     allow-circular-references: true
 
