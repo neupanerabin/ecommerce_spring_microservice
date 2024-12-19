@@ -6,18 +6,16 @@ package org.rabin.ecommerce.product;
  */
 
 
-import lombok.RequiredArgsConstructor;
 import org.rabin.ecommerce.exception.BusinessException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
@@ -28,7 +26,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
 public class ProductClient {
 
-    @Value("${application.config.product-url}")
+//    @Value("${application.config.product-url}"
+
+//    @Value("$http://localhost:8222/api/v1/products")
+    @Value("${application.config.product-url:default-url}")
+
     private String productUrl;
     private final RestTemplate restTemplate;
 
