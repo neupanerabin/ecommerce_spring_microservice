@@ -5,6 +5,7 @@ import lombok.Getter;
 /*
  * @author : rabin
  */
+
 public enum EmailTemplates {
 
     PAYMENT_CONFIRMATION("payment-confirmation.html", "Payment successfully processed"),
@@ -13,6 +14,7 @@ public enum EmailTemplates {
 
     @Getter
     private final String template;
+
     @Getter
     private final String subject;
 

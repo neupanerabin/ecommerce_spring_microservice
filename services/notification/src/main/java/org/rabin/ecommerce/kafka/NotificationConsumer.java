@@ -5,6 +5,8 @@ package org.rabin.ecommerce.kafka;
  * @author : rabin
  */
 
+
+
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,7 @@ import java.time.LocalDateTime;
 
 import static org.rabin.ecommerce.notification.NotificationType.ORDER_CONFIRMATION;
 import static org.rabin.ecommerce.notification.NotificationType.PAYMENT_CONFIRMATION;
+import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
@@ -27,11 +30,12 @@ import static org.rabin.ecommerce.notification.NotificationType.PAYMENT_CONFIRMA
 public class NotificationConsumer {
 
     private final NotificationRepository repository;
-     private final EmailService emailService;
+    private final EmailService emailService;
 
     @KafkaListener(topics = "payment-topic")
+//    @KafkaListener(topics = "payment-topic", groupId = "payment-group,orderGroup")
     public void consumePaymentSuccessNotification(PaymentConfirmation paymentConfirmation) throws MessagingException {
-        log.info(String.format("Consuming the message from payment-topic Topic:: %s", paymentConfirmation));
+        log.info(format("Consuming the message from payment-topic Topic:: %s", paymentConfirmation));
         repository.save(
                 Notification.builder()
                         .type(PAYMENT_CONFIRMATION)
@@ -56,8 +60,7 @@ public class NotificationConsumer {
     public void consumeConfirmationNotification(OrderConfirmation orderConfirmation) throws MessagingException {
         log.info(String.format("Consuming the message from payment-topic Topic:: %s", orderConfirmation));
         repository.save(
-                Notification.builder()
-                        .type(ORDER_CONFIRMATION)
+                Notification.builder().type(ORDER_CONFIRMATION)
                         .notificationDate(LocalDateTime.now())
                         .orderConfirmation(orderConfirmation)
                         .build()
@@ -73,8 +76,5 @@ public class NotificationConsumer {
                 orderConfirmation.products()
 
         );
-
     }
-
-
 }
