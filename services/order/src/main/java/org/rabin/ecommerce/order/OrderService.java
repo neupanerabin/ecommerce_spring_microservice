@@ -71,7 +71,7 @@ public class OrderService {
 
 
         // send the order confirmation --> notification-ms (kafka)
-        orderProducer.sendOrderConfirmation(
+      /*  orderProducer.sendOrderConfirmation(
                 new OrderConfirmation(
                         request.reference(),
                         request.amount(),
@@ -80,7 +80,20 @@ public class OrderService {
                         purchaseProducts
 
                 )
-        );
+
+        );*/
+        try {
+            orderProducer.sendOrderConfirmation(new OrderConfirmation(
+                    request.reference(),
+                    request.amount(),
+                    request.paymentMethod(),
+                    customer,
+                    purchaseProducts
+            ));
+        } catch (Exception e) {
+            throw new BusinessException("Failed to send order confirmation message.");
+        }
+
 
         return order.getId();
     }

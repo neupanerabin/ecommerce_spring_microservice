@@ -23,6 +23,7 @@ public class OrderController {
     public ResponseEntity<Integer> createOrder(
             @RequestBody @Valid OrderRequest request
     ){
+        System.out.println("Order received: " + request);
         return ResponseEntity.ok(this.service.createdOrder(request));
     }
 
