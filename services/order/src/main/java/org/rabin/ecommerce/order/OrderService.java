@@ -6,7 +6,6 @@ package org.rabin.ecommerce.order;
  */
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.rabin.ecommerce.customer.CustomerClient;
 import org.rabin.ecommerce.exception.BusinessException;
@@ -19,6 +18,8 @@ import org.rabin.ecommerce.payment.PaymentRequest;
 import org.rabin.ecommerce.product.ProductClient;
 import org.rabin.ecommerce.product.PurchaseRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -98,7 +99,7 @@ public class OrderService {
         return order.getId();
     }
 
-    public List<OrderResponse> findAll() {
+    public List<OrderResponse> findAllOrders() {
         return repository.findAll()
                 .stream()
                 .map(mapper::fromOrder)

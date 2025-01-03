@@ -33,13 +33,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handle(EntityNotFoundException  exp){
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST) // Respond with a 404 Not Found status
+                .status(HttpStatus.NOT_FOUND) // Respond with a 404 Not Found status
                 .body(exp.getMessage()); // Return the exception message in the response body
     }
 
     // Handle exceptions of type MethodArgumentNotValidException
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handle(MethodArgumentNotValidException exp){
+    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exp){
         var errors = new HashMap<String, String>();
 
         // Iterate through validation errors and map field names to error messages
