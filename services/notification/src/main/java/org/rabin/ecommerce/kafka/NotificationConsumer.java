@@ -56,7 +56,8 @@ public class NotificationConsumer {
 
     }
 
-    @KafkaListener(topics = "order-topic")
+//    @KafkaListener(topics = "order-topic")
+    @KafkaListener(topics = "order-topic", groupId = "order-group")
     public void consumeConfirmationNotification(OrderConfirmation orderConfirmation) throws MessagingException {
         log.info(String.format("Consuming the message from payment-topic Topic:: %s", orderConfirmation));
         repository.save(
@@ -68,13 +69,24 @@ public class NotificationConsumer {
 
         // to do send email
         var customerName = orderConfirmation.customer().firstname() + " " + orderConfirmation.customer().lastname();
-        emailService.sendOrderConfirmationEmail(
+        try {
+            emailService.sendOrderConfirmationEmail(
+                    orderConfirmation.customer().email(),
+                    customerName,
+                    orderConfirmation.totalAmount(),
+                    orderConfirmation.orderReference(),
+                    orderConfirmation.products()
+            );
+        } catch (MessagingException e) {
+            log.error("Failed to send order confirmation email to {}", orderConfirmation.customer().email(), e);
+        }
+       /* emailService.sendOrderConfirmationEmail(
                 orderConfirmation.customer().email(),
                 customerName,
                 orderConfirmation.totalAmount(),
                 orderConfirmation.orderReference(),
                 orderConfirmation.products()
 
-        );
+        );*/
     }
 }

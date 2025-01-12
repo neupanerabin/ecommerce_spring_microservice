@@ -1,10 +1,10 @@
 package org.rabin.ecommerce.email;
 
+import lombok.extern.slf4j.Slf4j;
 import org.rabin.ecommerce.kafka.order.Product;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -27,7 +27,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @Service
 public class EmailService {
 
-    @Autowired
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
 
@@ -41,7 +40,7 @@ public class EmailService {
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, UTF_8.name());
-        messageHelper.setFrom("contact@aliboucoding.com");
+        messageHelper.setFrom("contact@rabincoding.com");
 
         final String templateName = PAYMENT_CONFIRMATION.getTemplate();
 
@@ -78,7 +77,7 @@ public class EmailService {
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, UTF_8.name());
-        messageHelper.setFrom("contact@aliboucoding.com");
+        messageHelper.setFrom("contact@rabincoding.com");
 
         final String templateName = ORDER_CONFIRMATION.getTemplate();
 
